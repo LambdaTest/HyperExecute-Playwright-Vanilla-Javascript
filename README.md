@@ -55,7 +55,7 @@ Before using HyperExecute, you have to download HyperExecute CLI corresponding t
 
 ## Download HyperExecute CLI
 
-HyperExecute CLI is the CLI for interacting and running the tests on the HyperExecute Grid. The CLI provides a host of other useful features that accelerate test execution. In order to trigger tests using the CLI, you need to download the HyperExecute CLI binary corresponding to the platform (or OS) from where the tests are triggered:
+HyperExecute CLI is the CLI for interacting and running the tests on the HyperExecute Grid. The CLI provides a host of other useful Tests that accelerate test execution. In order to trigger tests using the CLI, you need to download the HyperExecute CLI binary corresponding to the platform (or OS) from where the tests are triggered:
 
 Also, it is recommended to download the binary in the project's parent directory. Shown below is the location from where you can download the HyperExecute CLI binary:
 
@@ -96,7 +96,7 @@ For more information about auto-split execution, check out the [Auto-Split Getti
 
 ### Core
 
-Auto-split YAML file (*HyperExecute-Yaml\.hyperexecute_autosplits.yaml*) in the repo contains the following configuration:
+Auto-split YAML file (*yaml/win/.hyperexecute_autosplits.yaml*) in the repo contains the following configuration:
 
 ```yaml
 globalTimeout: 90
@@ -143,7 +143,7 @@ cacheDirectories:
   - node_modules
 ```
 
-The *testDiscovery* directive contains the command that gives details of the mode of execution, along with detailing the command that is used for test execution. Here, we are fetching the list of Feature file scenario that would be further executed using the *value* passed in the *testRunnerCommand*
+The *testDiscovery* directive contains the command that gives details of the mode of execution, along with detailing the command that is used for test execution. Here, we are fetching the list of Test file scenario that would be further executed using the *value* passed in the *testRunnerCommand*
 
 ```yaml
 testDiscovery:
@@ -153,7 +153,7 @@ testDiscovery:
 testRunnerCommand: npx playwright test $test
 ```
 
-Running the above command on the terminal will give a list of Feature Scenario lines that are located in the Project folder:
+Running the above command on the terminal will give a list of Test Scenario lines that are located in the Project folder:
 
 Test Discovery Output:
 tests/test_4.spec.js:4
@@ -191,7 +191,7 @@ HyperExecute also facilitates the provision to download the artifacts on your lo
 The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/.hyperexecute_autosplits.yaml*). Run the following command on the terminal to trigger the tests in JS files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job.
 
 ```bash
-./hyperexecute --config --verbose HyperExecute-Yaml/.hyperexecute_autosplits.yaml
+./hyperexecute --config --verbose yaml/win/.hyperexecute_autosplits.yaml
 ```
 
 Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution
@@ -220,7 +220,7 @@ The target platform is set to Windows. Please set the *[runson]* key to *[mac]* 
 runson: win
 ```
 
-Playwright-JS Feature files in the 'Features' folder contain the Feature Scenario run on the HyperExecute grid. In the example, the Feature file *tests/test_4.spec.js* run in parallel on the basis of scenario by using the specified input combinations.
+Playwright-JS js files in the 'Tests' folder contain the Test Scenario run on the HyperExecute grid. In the example, the Test file *tests/test_4.spec.js* run in parallel on the basis of scenario by using the specified input combinations.
 
 ```yaml
 matrix:
@@ -279,28 +279,28 @@ HyperExecute also facilitates the provision to download the artifacts on your lo
 
 ## Test Execution
 
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/win/.hyperexecute_matrix.yaml*). Run the following command on the terminal to trigger the tests in Feature file Scenario on the HyperExecute grid.
+The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/win/.hyperexecute_matrix.yaml*). Run the following command on the terminal to trigger the tests in Test file Scenario on the HyperExecute grid.
 
 ```bash
-./hyperexecute --config --verbose HyperExecute-Yaml/.hyperexecute_matrix.yaml
+./hyperexecute --config --verbose yaml/win/.hyperexecute_matrix.yaml
 ```
 
 Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution:
 
 ## Run Playwright-JS tests on Windows and Linux platforms
 
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *HyperExecute-Yaml/.hyperexecute_simple_win.yaml* for Windows and *HyperExecute-Yaml/.hyperexecute_simple_linux.yaml* for Linux).
+The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/win/.hyperexecute_autosplits.yaml* for Windows and *yaml/linux/.hyperexecute_autosplits.yaml* for Linux).
 
 Run the following command on the terminal to trigger tests on Windows platform:
 
 ```bash
-./hyperexecute --config --verbose HyperExecute-Yaml/.hyperexecute_simple_win.yaml
+./hyperexecute --config --verbose yaml/win/.hyperexecute_autosplits.yaml
 ```
 
 Run the following command on the terminal to trigger tests on Linux platform:
 
 ```bash
-./hyperexecute --config --verbose HyperExecute-Yaml/.hyperexecute_simple_linux.yaml
+./hyperexecute --config --verbose yaml/win/.hyperexecute_autosplits.yaml
 ```
 
 ## Secrets Management
