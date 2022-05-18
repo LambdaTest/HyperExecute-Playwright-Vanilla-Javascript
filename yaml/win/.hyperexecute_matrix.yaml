@@ -1,0 +1,10 @@
+---
+version: "0.1"
+matrix:
+  os: [win]
+  methods: ['tests/test_2.spec.js:4','tests/test_1.spec.js:4']
+runson: ${matrix.os}
+pre:
+  - npm install
+testSuites:
+  - npx playwright test $methods
