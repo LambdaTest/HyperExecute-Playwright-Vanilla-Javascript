@@ -13,5 +13,5 @@ pre:
 testDiscovery:
   type: raw
   mode: dynamic
-  command: grep -nri 'describe' tests  | sed 's/:test.*//'
+  command: grep -lr 'describe' tests
 testRunnerCommand: npx playwright test $test
