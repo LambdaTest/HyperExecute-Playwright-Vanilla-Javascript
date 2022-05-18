@@ -19,7 +19,7 @@ Follow the below steps to run Gitpod button:
 1. Click '**Open in Gitpod**' button (You will be redirected to Login/Signup page).
 2. Login with Lambdatest credentials and it will be redirected to Gitpod editor in new tab and current tab will show hyperexecute dashboard.
 
-[<img alt="Run in Gitpod" width="200 px" align="center" src="images/Gitpod.svg" />](https://hyperexecute.lambdatest.com/?type=gitpod&framework=Playwrite-JS)
+[<img alt="Run in Gitpod" width="200 px" align="center" src="images/Gitpod.svg" />](https://hyperexecute.lambdatest.com/?type=gitpod&framework=Playwright-JS)
 ---
 <!---If logged in, it will be redirected to Gitpod editor in new tab where current tab will show hyperexecute dashboard.
 
@@ -27,25 +27,25 @@ If not logged in, it will be redirected to Login/Signup page and simultaneously 
 
 If not signed up, you need to sign up and simultaneously redirected to Gitpod in a new tab where current tab will show hyperexecute dashboard.--->
 
-# How to run Selenium automation tests on HyperExecute (using Playwrite-JS framework)
+# How to run Selenium automation tests on HyperExecute (using Playwright-JS framework)
 
 * [Pre-requisites](#pre-requisites)
    - [Download HyperExecute CLI](#download-hyperexecute-cli)
    - [Configure Environment Variables](#configure-environment-variables)
 
-* [Auto-Split Execution with Playwrite-JS](#auto-split-execution-with-Playwrite-JS)
+* [Auto-Split Execution with Playwright-JS](#auto-split-execution-with-Playwright-JS)
    - [Core](#core)
    - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching)
    - [Artifacts Management](#artifacts-management)
    - [Test Execution](#test-execution)
 
-* [Matrix Execution with Playwrite-JS](#matrix-execution-with-Playwrite-JS)
+* [Matrix Execution with Playwright-JS](#matrix-execution-with-Playwright-JS)
    - [Core](#core-1)
    - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching-1)
    - [Artifacts Management](#artifacts-management-1)
    - [Test Execution](#test-execution-1)
 
-* [Run Playwrite-JS tests on Windows and Linux platforms](#run-Playwrite-JS-tests-on-windows-and-linux-platforms)
+* [Run Playwright-JS tests on Windows and Linux platforms](#run-Playwright-JS-tests-on-windows-and-linux-platforms)
 * [Secrets Management](#secrets-management)
 * [Navigation in Automation Dashboard](#navigation-in-automation-dashboard)
 
@@ -88,7 +88,7 @@ set LT_USERNAME=LT_USERNAME
 set LT_ACCESS_KEY=LT_ACCESS_KEY
 ```
 
-## Auto-Split Execution with Playwrite-JS
+## Auto-Split Execution with Playwright-JS
 
 Auto-split execution mechanism lets you run tests at predefined concurrency and distribute the tests over the available infrastructure. Concurrency can be achieved at different levels - file, module, test suite, test, scenario, etc.
 
@@ -196,7 +196,7 @@ The CLI option *--config* is used for providing the custom HyperExecute YAML fil
 
 Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution
 
-# Matrix Execution with Playwrite-JS
+# Matrix Execution with Playwright-JS
 
 Matrix-based test execution is used for running the same tests across different test (or input) combinations. The Matrix directive in HyperExecute YAML file is a *key:value* pair where value is an array of strings.
 
@@ -220,7 +220,7 @@ The target platform is set to Windows. Please set the *[runson]* key to *[mac]* 
 runson: win
 ```
 
-Playwrite-JS Feature files in the 'Features' folder contain the Feature Scenario run on the HyperExecute grid. In the example, the Feature file *Features/ToDo.feature* run in parallel on the basis of scenario by using the specified input combinations.
+Playwright-JS Feature files in the 'Features' folder contain the Feature Scenario run on the HyperExecute grid. In the example, the Feature file *Features/ToDo.feature* run in parallel on the basis of scenario by using the specified input combinations.
 
 ```yaml
 matrix:
@@ -287,7 +287,7 @@ The CLI option *--config* is used for providing the custom HyperExecute YAML fil
 
 Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution:
 
-## Run Playwrite-JS tests on Windows and Linux platforms
+## Run Playwright-JS tests on Windows and Linux platforms
 
 The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *HyperExecute-Yaml/.hyperexecute_simple_win.yaml* for Windows and *HyperExecute-Yaml/.hyperexecute_simple_linux.yaml* for Linux).
 
