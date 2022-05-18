@@ -1,6 +1,6 @@
 <img height="100" alt="hyperexecute_logo" src="https://user-images.githubusercontent.com/1688653/159473714-384e60ba-d830-435e-a33f-730df3c3ebc6.png">
 
-HyperExecute is a smart test orchestration platform to run end-to-end Selenium tests at the fastest speed possible. HyperExecute lets you achieve an accelerated time to market by providing a test infrastructure that offers optimal speed, test orchestration, and detailed execution logs.
+HyperExecute is a smart test orchestration platform to run end-to-end Playwright tests at the fastest speed possible. HyperExecute lets you achieve an accelerated time to market by providing a test infrastructure that offers optimal speed, test orchestration, and detailed execution logs.
 
 The overall experience helps teams test code and fix issues at a much faster pace. HyperExecute is configured using a YAML file. Instead of moving the Hub close to you, HyperExecute brings the test scripts close to the Hub!
 
@@ -27,7 +27,7 @@ If not logged in, it will be redirected to Login/Signup page and simultaneously 
 
 If not signed up, you need to sign up and simultaneously redirected to Gitpod in a new tab where current tab will show hyperexecute dashboard.--->
 
-# How to run Selenium automation tests on HyperExecute (using Playwright-JS framework)
+# How to run Playwright automation tests on HyperExecute (using Playwright-JS framework)
 
 * [Pre-requisites](#pre-requisites)
    - [Download HyperExecute CLI](#download-hyperexecute-cli)
@@ -96,7 +96,7 @@ For more information about auto-split execution, check out the [Auto-Split Getti
 
 ### Core
 
-Auto-split YAML file (*HyperExecute-Yaml\.hyperexecuteStatic.yaml*) in the repo contains the following configuration:
+Auto-split YAML file (*HyperExecute-Yaml\.hyperexecute_autosplits.yaml*) in the repo contains the following configuration:
 
 ```yaml
 globalTimeout: 90
@@ -188,10 +188,10 @@ HyperExecute also facilitates the provision to download the artifacts on your lo
 
 ### Test Execution
 
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *HyperExecute-Yaml/.hyperexecuteStatic.yaml*). Run the following command on the terminal to trigger the tests in JS files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job.
+The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/.hyperexecute_autosplits.yaml*). Run the following command on the terminal to trigger the tests in JS files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job.
 
 ```bash
-./hyperexecute --config --verbose HyperExecute-Yaml/.hyperexecuteStatic.yaml
+./hyperexecute --config --verbose HyperExecute-Yaml/.hyperexecute_autosplits.yaml
 ```
 
 Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution
@@ -220,7 +220,7 @@ The target platform is set to Windows. Please set the *[runson]* key to *[mac]* 
 runson: win
 ```
 
-Playwright-JS Feature files in the 'Features' folder contain the Feature Scenario run on the HyperExecute grid. In the example, the Feature file *Features/ToDo.feature* run in parallel on the basis of scenario by using the specified input combinations.
+Playwright-JS Feature files in the 'Features' folder contain the Feature Scenario run on the HyperExecute grid. In the example, the Feature file *tests/test_4.spec.js* run in parallel on the basis of scenario by using the specified input combinations.
 
 ```yaml
 matrix:
@@ -229,7 +229,7 @@ matrix:
 
 ```
 
-The *testSuites* object contains a list of commands (that can be presented in an array). In the current YAML file, commands for executing the tests are put in an array (with a '-' preceding each item). The npx command is used to run tests in *.feature* files. The tags are mentioned as an array to the *tags* key that is a part of the matrix.
+The *testSuites* object contains a list of commands (that can be presented in an array). In the current YAML file, commands for executing the tests are put in an array (with a '-' preceding each item). The npx command is used to run tests in *.js* files. The tags are mentioned as an array to the *methods* key that is a part of the matrix.
 
 ```yaml
 testSuites:
@@ -279,10 +279,10 @@ HyperExecute also facilitates the provision to download the artifacts on your lo
 
 ## Test Execution
 
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *HyperExecute-Yaml/.hyperexecuteMatrix.yaml.yaml*). Run the following command on the terminal to trigger the tests in Feature file Scenario on the HyperExecute grid.
+The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/win/.hyperexecute_matrix.yaml*). Run the following command on the terminal to trigger the tests in Feature file Scenario on the HyperExecute grid.
 
 ```bash
-./hyperexecute --config --verbose HyperExecute-Yaml/.hyperexecuteMatrix.yaml
+./hyperexecute --config --verbose HyperExecute-Yaml/.hyperexecute_matrix.yaml
 ```
 
 Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution:
@@ -317,7 +317,7 @@ env:
 
 ## Navigation in Automation Dashboard
 
-HyperExecute lets you navigate from/to *Test Logs* in Automation Dashboard from/to *HyperExecute Logs*. You also get relevant get relevant Selenium test details like video, network log, commands, Exceptions & more in the Dashboard. Effortlessly navigate from the automation dashboard to HyperExecute logs (and vice-versa) to get more details of the test execution.
+HyperExecute lets you navigate from/to *Test Logs* in Automation Dashboard from/to *HyperExecute Logs*. You also get relevant get relevant Playwright test details like video, network log, commands, Exceptions & more in the Dashboard. Effortlessly navigate from the automation dashboard to HyperExecute logs (and vice-versa) to get more details of the test execution.
 
 
 ## We are here to help you :)
