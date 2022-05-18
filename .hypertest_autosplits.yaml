@@ -1,0 +1,17 @@
+---
+version: "0.1"
+globalTimeout: 90
+testSuiteTimeout: 90
+testSuiteStep: 90
+runson: mac
+autosplit: true
+retryOnFailure: false
+maxRetries: 5
+concurrency: 2
+pre:
+  - npm install
+testDiscovery:
+  type: raw
+  mode: dynamic
+  command: grep -nri 'describe' tests  | sed 's/:test.*//'
+testRunnerCommand: npx playwright test $test
