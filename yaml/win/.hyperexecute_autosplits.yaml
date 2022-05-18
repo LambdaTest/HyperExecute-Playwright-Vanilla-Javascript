@@ -10,6 +10,9 @@ maxRetries: 5
 concurrency: 2
 pre:
   - npm install
+cacheKey: '{{ checksum "package-lock.json" }}'
+cacheDirectories:
+  - node_modules
 testDiscovery:
   type: raw
   mode: dynamic

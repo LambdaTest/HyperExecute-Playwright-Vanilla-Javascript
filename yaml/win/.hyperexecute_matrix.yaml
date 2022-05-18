@@ -6,5 +6,8 @@ matrix:
 runson: ${matrix.os}
 pre:
   - npm install
+cacheKey: '{{ checksum "package-lock.json" }}'
+cacheDirectories:
+  - node_modules
 testSuites:
   - npx playwright test $methods
