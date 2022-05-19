@@ -10,6 +10,7 @@ maxRetries: 5
 concurrency: 2
 pre:
   - npm install
+  - npx playwright install
 cacheKey: '{{ checksum "package-lock.json" }}'
 cacheDirectories:
   - node_modules

@@ -2,10 +2,11 @@
 version: "0.1"
 matrix:
   os: [linux]
-  methods: ['tests/test_2.spec.js:4','tests/test_1.spec.js:4']
+  methods: ['tests/test_2.spec.js','tests/test_1.spec.js']
 runson: ${matrix.os}
 pre:
   - npm install
+  - npx playwright install
 cacheKey: '{{ checksum "package-lock.json" }}'
 cacheDirectories:
   - node_modules
