@@ -9,12 +9,9 @@ test.describe('Browse LambdaTest in different search engines 2', () => {
     await expect(page).toHaveTitle(/Playwright/);
     await expect(page.locator('text=Get Started').first()).toHaveAttribute('href', '/docs/intro');
     await page.click('text=Get Started');
-    await expect(page.locator('text=Introduction').first()).toBeVisible();
-    await page.click('text=Getting started');
-    await page.click('text=Inspector');
+    await expect(page.locator('text=Installation').first()).toBeVisible();
     await page.click('text=Trace Viewer');
     await page.click('text=Test Generator');
-    await page.click('text=Debugging tools');
     await page.click('text=Release notes');
     await page.click('text=Annotations');
     await page.click('text=API testing');
@@ -65,11 +62,8 @@ test.describe('Browse LambdaTest in different search engines 2', () => {
     await page.click('text=Selenium Grid');
     await page.click('text=Supported languages');
     await page.goto('https://playwright.dev/docs/intro');
-    await page.click('text=Getting started');
-    await page.click('text=Inspector');
     await page.click('text=Trace Viewer');
     await page.click('text=Test Generator');
-    await page.click('text=Debugging tools');
     await page.click('text=Release notes');
     await page.click('text=Annotations');
     await page.click('text=API testing');
