@@ -7,6 +7,7 @@ runson: ${matrix.os}
 pre:
   - npm install
   - npx playwright install
+  - npx playwright install-deps  
 cacheKey: '{{ checksum "package-lock.json" }}'
 cacheDirectories:
   - node_modules
