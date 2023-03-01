@@ -67,6 +67,6 @@ test.describe('Browse LambdaTest in different search engines 1', () => {
 
     console.log('Page title:: ', title)
     // Use the expect API for assertions provided by playwright
-    expect(title).toEqual(expect.stringContaining('Lam'))
+    expect(title).toEqual(expect.stringContaining('LambdaTest'))
   })
 })
