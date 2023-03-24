@@ -4,7 +4,6 @@ const { expect } = require('@playwright/test')
 test.describe('Browse LambdaTest in different search engines 3', () => {
   test('Search LambdaTest on Bing', async ({ page }) => {
     await page.setViewportSize({ width: 1920, height: 1080 });
-    // await page.goto('http://127.0.0.1:8000/');
     await page.goto('https://playwright.dev/');
     await expect(page).toHaveTitle(/Playwright/);
     await expect(page.locator('text=Get Started').first()).toHaveAttribute('href', '/docs/intro');
@@ -25,7 +24,6 @@ test.describe('Browse LambdaTest in different search engines 3', () => {
     await page.click('text=Retries');
     await page.click('text=Timeouts');
     await page.click('text=Visual comparisons');
-    // await page.click('text=Advanced: configuration');
     await page.click('text=Fixtures');
     await page.click('text=TypeScript');
     await page.click('text=Experimental: components');
@@ -49,7 +47,6 @@ test.describe('Browse LambdaTest in different search engines 3', () => {
     await page.click('text=Pages');
     await page.click('text=Page Object Models');
     await page.click('text=Screenshots');
-    //await page.click('text=Selectors');
     await page.click('text=Videos');
     await page.click('text=Migration');
     await page.click('text=Migrating from Protractor');
