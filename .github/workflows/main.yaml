@@ -1,0 +1,24 @@
+name: Hyperexecute-Playwright
+on:
+  schedule:
+    - cron: '30 5,17 * * *'
+  workflow_dispatch:
+  
+jobs:
+  HyperExecute-Playwright:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Starting CLI testing
+        shell: bash
+        run: |
+          curl https://downloads.lambdatest.com/hyperexecute/windows/hyperexecute.exe -o hyperexecute.exe
+          chmod +x hyperexecute
+          ./hyperexecute --user ${{ secrets.username }} --key ${{ secrets.accesskey }} --download-artifacts --config yaml/win/.hyperexecute_autosplits.yaml
+          echo "Test completion"
+ 
