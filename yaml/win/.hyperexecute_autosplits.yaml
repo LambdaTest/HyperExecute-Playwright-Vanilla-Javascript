@@ -19,3 +19,5 @@ testDiscovery:
   mode: dynamic
   command: grep -lr 'describe' tests
 testRunnerCommand: npx playwright test $test
+
+jobLabel: [playwright-VanillaJS, win, autosplit] 
