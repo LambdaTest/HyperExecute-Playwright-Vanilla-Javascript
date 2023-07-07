@@ -12,3 +12,5 @@ cacheDirectories:
   - node_modules
 testSuites:
   - npx playwright test $methods
+
+jobLabel: [playwright-VanillaJS, linux, matrix] 

@@ -19,3 +19,5 @@ testDiscovery:
   mode: dynamic
   command: grep -nri 'describe' tests  | sed 's/:test.*//'
 testRunnerCommand: npx playwright test $test
+
+jobLabel: [playwright-VanillaJS, mac, autosplit] 
