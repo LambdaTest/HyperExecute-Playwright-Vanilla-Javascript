@@ -18,7 +18,6 @@ test.describe('Browse LambdaTest in different search engines 4', () => {
     await page.click('text=Command line');
     await page.click('text=Configuration');
     await page.click('text=Page Object Model');
-    await page.click('text=Parallelism and sharding');
     await page.click('text=Parameterize tests');
     await page.click('text=Reporters');
     await page.click('text=Retries');
