@@ -1,0 +1,5 @@
+{"level":"debug","time":"2023-10-27T06:29:46.822Z","caller":"cmd/bin.go:97","msg":"cli os: linux, cli arch: amd64"}
+{"level":"debug","time":"2023-10-27T06:29:47.106Z","caller":"cmd/bin.go:105","msg":"Upstream version: {Name: Min:0.2.118 Max:0.2.118} "}
+{"level":"error","time":"2023-10-27T06:29:47.107Z","caller":"globalconfigvalidator/setup.go:44","msg":"2023-10-27T06:29:46Z    error    \u001b[91mERR::NO::USER\u001b[0m     Unable to find LT username.    Unable to parse LT username. Use --user cli flag or LT_USERNAME environment variable"}
+{"level":"error","time":"2023-10-27T06:29:47.107Z","caller":"core/lifecycle.go:63","msg":"2023-10-27T06:29:46Z    error    \u001b[91mERR::NO::USER\u001b[0m     Unable to find LT username."}
+{"level":"debug","time":"2023-10-27T06:29:47.107Z","caller":"cmd/bin.go:297","msg":"Exiting application due to error \u001b[91mERR::NO::USER\u001b[0m     Unable to find LT username."}
