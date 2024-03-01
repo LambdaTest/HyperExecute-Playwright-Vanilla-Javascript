@@ -27,27 +27,11 @@ If not logged in, it will be redirected to Login/Signup page and simultaneously 
 
 If not signed up, you need to sign up and simultaneously redirected to Gitpod in a new tab where current tab will show hyperexecute dashboard.--->
 
-# How to run Playwright automation tests on HyperExecute (using Playwright-JS framework)
+# How to run SmartUI Playwright Sample automation tests on HyperExecute
 
 * [Pre-requisites](#pre-requisites)
    - [Download HyperExecute CLI](#download-hyperexecute-cli)
    - [Configure Environment Variables](#configure-environment-variables)
-
-* [Auto-Split Execution with Playwright-JS](#auto-split-execution-with-Playwright-JS)
-   - [Core](#core)
-   - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching)
-   - [Artifacts Management](#artifacts-management)
-   - [Test Execution](#test-execution)
-
-* [Matrix Execution with Playwright-JS](#matrix-execution-with-Playwright-JS)
-   - [Core](#core-1)
-   - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching-1)
-   - [Artifacts Management](#artifacts-management-1)
-   - [Test Execution](#test-execution-1)
-
-* [Run Playwright-JS tests on Windows and Linux platforms](#run-Playwright-JS-tests-on-windows-and-linux-platforms)
-* [Secrets Management](#secrets-management)
-* [Navigation in Automation Dashboard](#navigation-in-automation-dashboard)
 
 # Pre-requisites
 
@@ -88,236 +72,29 @@ set LT_USERNAME=LT_USERNAME
 set LT_ACCESS_KEY=LT_ACCESS_KEY
 ```
 
-## Auto-Split Execution with Playwright-JS
+## About SmartUI Webhook
 
-Auto-split execution mechanism lets you run tests at predefined concurrency and distribute the tests over the available infrastructure. Concurrency can be achieved at different levels - file, module, test suite, test, scenario, etc.
+LambdaTest's SmartUI uses a webhook to call the `smartui.takeScreenshot` function. This function captures a screenshot of the full page and uses it for visual regression testing. The function is called using the `page.evaluate` method with the `lambdatest_action` parameter.
 
-For more information about auto-split execution, check out the [Auto-Split Getting Started Guide](https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/#smart-auto-test-splitting)
+Here's an example of how to use the `smartui.takeScreenshot` function:
 
-### Core
-
-Auto-split YAML file (*yaml/win/.hyperexecute_autosplits.yaml*) in the repo contains the following configuration:
-
-```yaml
-globalTimeout: 90
-testSuiteTimeout: 90
-testSuiteStep: 90
+```javascript
+await page.evaluate((_) => {},
+    `lambdatest_action: ${JSON.stringify({ action: 'smartui.takeScreenshot', arguments: { fullPage: true, screenshotName: '<Your_Screenshot_Name>' }
+    })}`)
 ```
 
-Global timeout, testSuite timeout, and testSuite timeout are set to 90 minutes.
- 
-The *runson* key determines the platform (or operating system) on which the tests are executed. Here we have set the target OS as Windows.
-
-```yaml
-runson: win
-```
-
-Auto-split is set to true in the YAML file.
-
-```yaml
- autosplit: true
-```
-
-*retryOnFailure* is set to true, instructing HyperExecute to retry failed command(s). The retry operation is carried out till the number of retries mentioned in *maxRetries* are exhausted or the command execution results in a *Pass*. In addition, the concurrency (i.e. number of parallel sessions) is set to 2.
-
-```yaml
-retryOnFailure: true
-runson: win
-maxRetries: 2
-```
-
-## Pre Steps and Dependency Caching
-
-To leverage the advantage offered by *Dependency Caching* in HyperExecute, the integrity of *package-lock.json* is checked using the checksum functionality.
-
-```yaml
-cacheKey: '{{ checksum "package-lock.json" }}'
-```
-
-The caching advantage offered by *NPM* can be leveraged in HyperExecute, whereby the downloaded packages can be stored (or cached) in a secure server for future executions. The packages available in the cache will only be used if the checksum stage results in a Pass.
-
-
-
-```yaml
-cacheDirectories:
-  - node_modules
-```
-
-The *testDiscovery* directive contains the command that gives details of the mode of execution, along with detailing the command that is used for test execution. Here, we are fetching the list of Test file scenario that would be further executed using the *value* passed in the *testRunnerCommand*
-
-```yaml
-testDiscovery:
-  type: raw
-  mode: dynamic
-  command: grep -nri 'describe' tests  | sed 's/:test.*//'
-testRunnerCommand: npx playwright test $test
-```
-
-Running the above command on the terminal will give a list of Test Scenario lines that are located in the Project folder:
-
-Test Discovery Output:
-tests/test_4.spec.js:4
-tests/test_3.spec.js:4
-tests/test_2.spec.js:4
-tests/test_1.spec.js:4
-
-The *testRunnerCommand* contains the command that is used for triggering the test. The output fetched from the *testDiscoverer* command acts as an input to the *testRunner* command.
-
-```yaml
-testRunnerCommand: npx playwright test $test
-```
-
-
-### Artifacts Management
-
-The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artifacts and combing artifacts generated under each task.
-
-The *uploadArtefacts* directive informs HyperExecute to upload artifacts [files, reports, etc.] generated after task completion.  In the example, *path* consists of a regex for parsing the directory (i.e. *reports* that contains the test reports).
-
-```yaml
-mergeArtifacts: true
-
-uploadArtefacts:
-  [{
-    "name": "Reports",
-    "path": ["Reports\\"]
-  }]
-
-```
-HyperExecute also facilitates the provision to download the artifacts on your local machine. To download the artifacts, click on *Artifacts* button corresponding to the associated TestID.
-
-### Test Execution
-
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/.hyperexecute_autosplits.yaml*). Run the following command on the terminal to trigger the tests in JS files on the HyperExecute grid. The *--download-artifacts* option is used to inform HyperExecute to download the artifacts for the job.
-
-```bash
-./hyperexecute --config --verbose yaml/win/.hyperexecute_autosplits.yaml
-```
-
-Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution
-
-# Matrix Execution with Playwright-JS
-
-Matrix-based test execution is used for running the same tests across different test (or input) combinations. The Matrix directive in HyperExecute YAML file is a *key:value* pair where value is an array of strings.
-
-Also, the *key:value* pairs are opaque strings for HyperExecute. For more information about matrix multiplexing, check out the [Matrix Getting Started Guide](https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/#matrix-based-build-multiplexing)
-
-### Core
-
-In the current example, matrix YAML file (*yaml/hyperexecute_matrix_sample.yaml*) in the repo contains the following configuration:
-
-```yaml
-globalTimeout: 90
-testSuiteTimeout: 90
-testSuiteStep: 90
-```
-
-Global timeout, testSuite timeout, and testSuite timeout are set to 90 minutes.
- 
-The target platform is set to Windows. Please set the *[runson]* key to *[mac]* if the tests have to be executed on the macOS platform.
-
-```yaml
-runson: win
-```
-
-Playwright-JS js files in the 'Tests' folder contain the Test Scenario run on the HyperExecute grid. In the example, the Test file *tests/test_4.spec.js* run in parallel on the basis of scenario by using the specified input combinations.
-
-```yaml
-matrix:
-  os: [linux]
-  methods: ['tests/test_4.spec.js:4','tests/test_3.spec.js:4','tests/test_2.spec.js:4','tests/test_1.spec.js:4']
-
-```
-
-The *testSuites* object contains a list of commands (that can be presented in an array). In the current YAML file, commands for executing the tests are put in an array (with a '-' preceding each item). The npx command is used to run tests in *.js* files. The tags are mentioned as an array to the *methods* key that is a part of the matrix.
-
-```yaml
-testSuites:
-  - npx playwright test $methods
-```
-
-### Pre Steps and Dependency Caching
-
-Dependency caching is enabled in the YAML file to ensure that the package dependencies are not downloaded in subsequent runs. The first step is to set the Key used to cache directories.
-
-```yaml
-cacheKey: '{{ checksum "package-lock.json" }}'
-```
-
-Set the array of files & directories to be cached. In the example, all the packages will be cached in the *CacheDir* directory.
-
-```yaml
-cacheDirectories:
-  - node_modules
-```
-
-Steps (or commands) that must run before the test execution are listed in the *pre* run step. In the example, the packages listed in *requirements.txt* are installed using the *npm install* command.
-
-```yaml
-pre:
-  - npm install
-```
-
-### Artifacts Management
-
-The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artifacts and combing artifacts generated under each task.
-
-The *uploadArtefacts* directive informs HyperExecute to upload artifacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the directory (i.e. *reports* that contains the test reports).
-
-```yaml
-mergeArtifacts: true
-
-uploadArtefacts:
-  [{
-    "name": "Reports",
-    "path": ["Reports\\"]
-  }]
-```
-
-HyperExecute also facilitates the provision to download the artifacts on your local machine. To download the artifacts, click on Artifacts button corresponding to the associated TestID.
-
+Replace `<Your Screenshot Name>` with a relevant name for the screenshot. The screenshot will be saved with this name in the LambdaTest platform, and you can use it for comparing the UI changes over time.
 
 ## Test Execution
 
 The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/win/.hyperexecute_matrix.yaml*). Run the following command on the terminal to trigger the tests in Test file Scenario on the HyperExecute grid.
 
 ```bash
-./hyperexecute --config --verbose yaml/win/.hyperexecute_matrix.yaml
+./hyperexecute --config --verbose yaml/hyperexecute.yaml
 ```
 
 Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution:
-
-## Run Playwright-JS tests on Windows and Linux platforms
-
-The CLI option *--config* is used for providing the custom HyperExecute YAML file (i.e. *yaml/win/.hyperexecute_autosplits.yaml* for Windows and *yaml/linux/.hyperexecute_autosplits.yaml* for Linux).
-
-Run the following command on the terminal to trigger tests on Windows platform:
-
-```bash
-./hyperexecute --config --verbose yaml/win/.hyperexecute_autosplits.yaml
-```
-
-Run the following command on the terminal to trigger tests on Linux platform:
-
-```bash
-./hyperexecute --config --verbose yaml/win/.hyperexecute_autosplits.yaml
-```
-
-## Secrets Management
-
-In case you want to use any secret keys in the YAML file, the same can be set by clicking on the *Secrets* button the dashboard.
-
-
-All you need to do is create an environment variable that uses the secret key:
-
-```yaml
-env:
-  AccessKey: ${{.secrets.AccessKey}}
-```
-
-## Navigation in Automation Dashboard
-
-HyperExecute lets you navigate from/to *Test Logs* in Automation Dashboard from/to *HyperExecute Logs*. You also get relevant get relevant Playwright test details like video, network log, commands, Exceptions & more in the Dashboard. Effortlessly navigate from the automation dashboard to HyperExecute logs (and vice-versa) to get more details of the test execution.
 
 
 ## We are here to help you :)
