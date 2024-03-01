@@ -1,0 +1,35 @@
+---
+version: 0.1
+globalTimeout: 150
+testSuiteTimeout: 150
+testSuiteStep: 150
+
+runson: win
+
+retryOnFailure: true
+maxRetries: 1
+
+concurrency: 1
+
+env:
+  # PAT: ${{ .secrets.testKey }}
+  CACHE_DIR: m2_cache_dir
+#  TARGET_OS: Windows 10
+
+# Dependency caching for Windows
+cacheKey: '{{ checksum "pom.xml" }}'
+cacheDirectories:
+  - ${CACHE_DIR}
+
+matrix:
+  classname: ["pw-smartui.js"]
+# shell: bash
+
+pre:
+  # install playwright version to be used.
+  - npm install playwright@1.42.0 --save-exact
+
+testSuites:
+  - node pw-smartui.js
+
+jobLabel: ['HYP', 'Playwright', 'SmartUI']
