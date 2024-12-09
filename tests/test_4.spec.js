@@ -1,8 +1,8 @@
 const { test } = require('../lambdatest-setup')
 const { expect } = require('@playwright/test')
 
-test.describe('Browse LambdaTest in different search engines 4', () => {
-  test('Search LambdaTest on Bing', async ({ page }) => {
+test.describe('PlayWright Vanilla JS - 4', () => {
+  test('Navigate PlayWright Documentation', async ({ page }) => {
     await page.setViewportSize({ width: 1920, height: 1080 });
     await page.goto('https://playwright.dev/');
     await expect(page).toHaveTitle(/Playwright/);
@@ -54,15 +54,5 @@ test.describe('Browse LambdaTest in different search engines 4', () => {
     await page.click('text=Continuous Integration');
     await page.click('text=Selenium Grid');
     await page.click('text=Supported languages');
-    await page.goto('https://www.bing.com')
-    const element = await page.$('[id="sb_form_q"]')
-    await element.click()
-    await element.type('LambdaTest')
-    await element.press('Enter')
-    const title = await page.title()
-
-    console.log('Page title:: ', title)
-    // Use the expect API for assertions provided by playwright
-    expect(title).toEqual(expect.stringContaining('LambdaTest'))
   })
 })
