@@ -4,16 +4,23 @@ const { devices } = require('@playwright/test')
 const config = {
   testDir: 'tests',
   testMatch: '**/*.spec.js',
-  timeout: 120000,
+  timeout: 30000,
   use: {
-    viewport: null
+    viewport: null,
   },
   workers: 1,
   projects: [
     {
       name: 'chrome:latest@lambdatest',
       use: {
-        viewport: { width: 1280, height: 720 }
+        viewport: { width: 1000, height: 720 },
+        launchOptions: {
+          headless: false, // Ensures the browser runs in headed mode
+          args: [
+            '--disable-dev-shm-usage',
+            '--no-sandbox'
+          ],
+        },
       }
     }
     // {
