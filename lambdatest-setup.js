@@ -37,8 +37,11 @@ exports.test = base.test.extend({
     if (testInfo.project.name.match(/lambdatest/)) {
       modifyCapabilities(testInfo.project.name, `${testInfo.title} - ${fileName}`)
 
-      const browser = await chromium.connect({
-        wsEndpoint: `wss://cdp.lambdatest.com/playwright?capabilities=${encodeURIComponent(JSON.stringify(capabilities))}`
+      // const browser = await chromium.launch({headless: false ,
+      //   wsEndpoint: `wss://cdp.lambdatest.com/playwright?capabilities=${encodeURIComponent(JSON.stringify(capabilities))}`
+      // })
+
+      const browser = await chromium.connect({wsEndpoint: `wss://cdp.lambdatest.com/playwright?capabilities=${encodeURIComponent(JSON.stringify(capabilities))}`
       })
 
       const ltPage = await browser.newPage(testInfo.project.use)
