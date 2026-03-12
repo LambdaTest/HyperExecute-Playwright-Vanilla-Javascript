@@ -45,6 +45,12 @@ If not signed up, you need to sign up and simultaneously redirected to Gitpod in
    - [Artifacts Management](#artifacts-management-1)
    - [Test Execution](#test-execution-1)
 
+* [Hybrid Execution with Playwright-JS](#hybrid-execution-with-Playwright-JS)
+   - [Core](#core-2)
+   - [Pre Steps and Dependency Caching](#pre-steps-and-dependency-caching-2)
+   - [Artifacts Management](#artifacts-management-2)
+   - [Test Execution](#test-execution-2)
+
 * [Run Playwright-JS tests on Windows and Linux platforms](#run-Playwright-JS-tests-on-windows-and-linux-platforms)
 * [Secrets Management](#secrets-management)
 * [Navigation in Automation Dashboard](#navigation-in-automation-dashboard)
@@ -285,7 +291,108 @@ The CLI option *--config* is used for providing the custom HyperExecute YAML fil
 ./hyperexecute --config --verbose yaml/win/.hyperexecute_matrix.yaml
 ```
 
-Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution:
+Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution
+
+# Hybrid Execution with Playwright-JS
+
+Hybrid execution is a powerful mechanism that combines the capabilities of both Matrix and Auto-split execution. It allows you to run tests across multiple environments or input combinations (Matrix) while simultaneously distributing those tests across parallel nodes within each environment (Auto-split) to achieve maximum speed and efficiency.
+
+Also, the *key:value* pairs are opaque strings for HyperExecute. For more information about matrix multiplexing, check out the [Matrix Getting Started Guide](https://www.lambdatest.com/support/docs/getting-started-with-hyperexecute/#matrix-based-build-multiplexing)
+
+### Core
+
+In the hybrid execution model, the YAML file (e.g., yaml/.hyperexecute_hybrid.yaml) in the repo contains a combination of both configurations:
+
+```yaml
+globalTimeout: 90
+testSuiteTimeout: 90
+testSuiteStep: 90
+```
+
+Global timeout, testSuite timeout, and testSuite timeout are set to 90 minutes.
+ 
+Because this is a hybrid approach, we enable autosplit and define a matrix in the same file. In this example, we are testing across different Playwright projects with combinations of Operating Systems and Browsers.
+
+```yaml
+autosplit: true
+retryOnFailure: true
+maxRetries: 2
+concurrency: 2
+
+matrix:
+  version: ["latest"]
+  os: ["win", "mac"]
+  project: ["chrome", "pw-firefox", "MicrosoftEdge", "pw-webkit"]
+```
+
+The runson key determines the platform on which the tests are executed. In a hybrid strategy, this is dynamically populated using the parameters defined in the matrix.
+
+```yaml
+runson: ${matrix.os}
+```
+
+Hybrid execution uses the testDiscovery directive to automatically find tests, and then passes them into the testRunnerCommand alongside your matrix variables.
+
+```yaml
+testDiscovery:
+  type: raw
+  mode: dynamic
+  command: grep -nri 'describe' tests  | sed 's/:test.*//'
+
+testRunnerCommand: px playwright test $test --config=playwrightHybrid.config.js --project="${matrix.project}:${matrix.version}@lambdatest"
+```
+In the above example, HyperExecute will dynamically discover all test scenarios. It will then spin up parallel machines for Windows and macOS, and further split the discovered tests across those machines, invoking Playwright projects dynamically `${matrix.project}:${matrix.version}@lambdatest`.
+
+### Pre Steps and Dependency Caching
+
+Dependency caching is enabled in the YAML file to ensure that the package dependencies are not downloaded in subsequent runs. The first step is to set the Key used to cache directories.
+
+```yaml
+cacheKey: '{{ checksum "package-lock.json" }}'
+```
+
+Set the array of files & directories to be cached. In the example, all the packages will be cached in the *CacheDir* directory.
+
+```yaml
+cacheDirectories:
+  - node_modules
+```
+
+Steps (or commands) that must run before the test execution are listed in the *pre* run step. In the example, the packages listed in *requirements.txt* are installed using the *npm install* command.
+
+```yaml
+pre:
+  - npm install
+```
+
+### Artifacts Management
+
+The *mergeArtifacts* directive (which is by default *false*) is set to *true* for merging the artifacts and combing artifacts generated under each task.
+
+The *uploadArtefacts* directive informs HyperExecute to upload artifacts [files, reports, etc.] generated after task completion. In the example, *path* consists of a regex for parsing the directory (i.e. *reports* that contains the test reports).
+
+```yaml
+mergeArtifacts: true
+
+uploadArtefacts:
+  [{
+    "name": "Reports",
+    "path": ["Reports\\"]
+  }]
+```
+
+HyperExecute also facilitates the provision to download the artifacts on your local machine. To download the artifacts, click on Artifacts button corresponding to the associated TestID.
+
+
+## Test Execution
+
+The CLI option --config is used for providing the custom HyperExecute YAML file (i.e. yaml/.hyperexecute_hybrid.yaml). Run the following command on the terminal to trigger the hybrid tests on the HyperExecute grid.
+
+```bash
+./hyperexecute --config yaml/.hyperexecute_hybrid.yaml
+```
+
+Visit [HyperExecute Automation Dashboard](https://automation.lambdatest.com/hyperexecute) to check the status of execution
 
 ## Run Playwright-JS tests on Windows and Linux platforms
 

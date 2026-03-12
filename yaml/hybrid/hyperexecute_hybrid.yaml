@@ -1,0 +1,48 @@
+---
+version: "0.1"
+globalTimeout: 90
+testSuiteTimeout: 90
+testSuiteStep: 90
+
+runson: ${matrix.os}
+
+matrix:
+  version: ["latest"]
+  os: ["win", "mac"]
+  project: ["chrome", "pw-webkit"] # Other projects: "pw-firefox", "MicrosoftEdge"
+
+exclusionMatrix: 
+  - os: ["win"]
+    project: ["pw-webkit"]
+
+autosplit: true
+concurrency: 4
+parallelism: 2
+
+pre:
+  - npm install
+  - npx playwright install
+
+cacheKey: '{{ checksum "package-lock.json" }}'
+cacheDirectories:
+  - node_modules
+
+testDiscovery:
+  type: raw
+  mode: dynamic
+  winCommand: grep -lr 'describe' tests
+  macCommand: grep -nri 'describe' tests  | sed 's/:test.*//'
+
+
+testRunnerCommand: npx playwright test $test --config=playwrightHybrid.config.js --project="${matrix.project}:${matrix.version}@lambdatest"
+
+retryOnFailure: true
+maxRetries: 1
+
+report: true
+partialReports:
+  frameworkName: playwright
+  location: playwright-report
+  type: html
+
+jobLabel: [playwright-VanillaJS, win-mac, hybrid] 

@@ -15,13 +15,13 @@ const config = {
       use: {
         viewport: { width: 1280, height: 720 }
       }
-    }
+    },
     // {
     //   name: 'MicrosoftEdge:latest@lambdatest',
     //   use: {
     //     viewport: { width: 1280, height: 720 }
     //   }
-    // }
+    // },
     //     {
     //   name: 'pw-chromium:latest@lambdatest',
     //   use: {
