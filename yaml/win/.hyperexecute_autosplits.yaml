@@ -16,7 +16,7 @@ cacheDirectories:
   - node_modules
 testDiscovery:
   type: raw
-  mode: dynamic
+  mode: remote
   command: grep -lr 'describe' tests
 testRunnerCommand: npx playwright test $test
 
