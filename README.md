@@ -13,7 +13,7 @@
 With TestMu AI (Formerly LambdaTest), you can run Playwright Vanilla JavaScript tests using HyperExecute. This sample shows how to configure Playwright + Vanilla JavaScript + HyperExecute to run on the TestMu AI cloud.
 
 - [Sign up on TestMu AI](https://www.testmuai.com/register/) (Formerly LambdaTest).
-- Follow the [TestMu AI Documentation](https://www.testmuai.com/support/docs/playwright-vanillajs-on-hyperexecute/) for the full setup walkthrough.
+- Follow the [Run Playwright tests with Vanilla JavaScript on HyperExecute](https://www.testmuai.com/support/docs/playwright-vanillajs-on-hyperexecute/) for the full setup walkthrough.
 
 ### Prerequisites
 
