@@ -1,5 +1,5 @@
-const { test } = require('../lambdatest-setup')
-const { expect } = require('@playwright/test')
+import { expect } from '@playwright/test';
+import { test } from '../lambdatest-setup';
 
 test.describe('PlayWright Vanilla JS - 2', () => {
   test('Navigate PlayWright Documentation', async ({ page }) => {

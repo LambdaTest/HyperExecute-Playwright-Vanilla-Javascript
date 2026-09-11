@@ -1,6 +1,6 @@
-const base = require('@playwright/test')
-const path = require('path')
-const { chromium } = require('playwright')
+import base from '@playwright/test'
+import path from 'path'
+import { chromium } from 'playwright'
 
 // LambdaTest capabilities
 const capabilities = {
@@ -30,7 +30,7 @@ const modifyCapabilities = (configName, testName) => {
 
 const getErrorMessage = (obj, keys) => keys.reduce((obj, key) => (typeof obj == 'object' ? obj[key] : undefined), obj)
 
-exports.test = base.test.extend({
+export const test = base.test.extend({
   page: async ({ page, playwright }, use, testInfo) => {
     // Configure LambdaTest platform for cross-browser testing
     let fileName = testInfo.file.split(path.sep).pop()
@@ -51,7 +51,7 @@ exports.test = base.test.extend({
           remark: getErrorMessage(testInfo, ['error', 'message'])
         }
       }
-      await ltPage.evaluate(() => {},
+      await ltPage.evaluate(() => { },
         `lambdatest_action: ${JSON.stringify(testStatus)}`)
       await ltPage.close()
       await browser.close()
