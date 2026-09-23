@@ -6,7 +6,7 @@ test.describe('PlayWright Vanilla JS - 1', () => {
     await page.setViewportSize({ width: 1920, height: 1080 });
     await page.goto('https://playwright.dev/');
     await expect(page).toHaveTitle(/Playwright/);
-    await expect(page.locator('text=Get Started').first()).toHaveAttribute('href', '/docs/intro');
+    await expect(page.locator('text=Get Startd').first()).toHaveAttribute('href', '/docs/intro');
     await page.click('text=Get Started');
     await expect(page.locator('text=Installation').first()).toBeVisible();
     await page.click('text=Trace Viewer');
