@@ -1,4 +1,3 @@
-const { devices } = require('@playwright/test')
 
 // Playwright config to run tests on LambdaTest platform and local
 const config = {
@@ -43,4 +42,4 @@ const config = {
   ]
 }
 
-module.exports = config
+export default config
