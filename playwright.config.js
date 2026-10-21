@@ -2,8 +2,9 @@ const { devices } = require('@playwright/test')
 
 // Playwright config to run tests on LambdaTest platform and local
 const config = {
-  testDir: 'tests',
-  testMatch: '**/*.spec.js',
+  testDir: '.',
+  // tests_rerun_probe/ holds the rerun fixture specs; it must be inside testDir or they are never found
+  testMatch: ['tests/**/*.spec.js', 'tests_rerun_probe/**/*.spec.js'],
   timeout: 120000,
   use: {
     viewport: null
